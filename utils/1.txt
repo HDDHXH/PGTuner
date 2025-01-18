@@ -1,0 +1,36 @@
+current_directory = os.getcwd()  # 返回当前工作目录的路径
+    parent_directory = os.path.dirname(current_directory)  # 返回当前工作目录所指路径的父目录
+
+    # b_path = os.path.join(parent_directory, 'hnswlib/bigann/bigann_base.bvecs')
+    # q_path = os.path.join(parent_directory, 'hnswlib/bigann/bigann_query.bvecs')
+    # d_path = os.path.join(parent_directory, 'hnswlib/bigann/gnd/dis_1M.fvecs')
+    # i_path = os.path.join(parent_directory, 'hnswlib/bigann/gnd/idx_1M.ivecs')
+
+    init_q_path = os.path.join(parent_directory, 'Data/Query/sift/128.fvecs')
+
+    q_path1 = os.path.join(parent_directory, 'Data/Query/sift/128_0.fvecs')
+    q_path2 = os.path.join(parent_directory, 'Data/Query/sift/128_25.fvecs')
+    q_path3 = os.path.join(parent_directory, 'Data/Query/sift/128_50.fvecs')
+    q_path4 = os.path.join(parent_directory, 'Data/Query/sift/128_75.fvecs')
+    q_path5 = os.path.join(parent_directory, 'Data/Query/sift/128_100.fvecs')
+
+    init_q_vectors = read_fvecs(init_q_path, num=None)
+
+    temp_index = init_q_vectors.shape[0] // 2
+
+    q_vectors1 = init_q_vectors[:temp_index]
+    q_vectors5 = init_q_vectors[temp_index:]
+
+    q_vectors2 = q_vectors1.copy()
+    q_vectors3 = q_vectors1.copy()
+    q_vectors4 = q_vectors1.copy()
+
+    q_vectors2[:temp_index*0.25] = q_vectors5[:temp_index*0.25]
+    q_vectors3[:temp_index*0.5] = q_vectors5[:temp_index*0.5]
+    q_vectors4[:temp_index*0.75] = q_vectors5[:temp_index*0.75]
+
+    save_fvecs(q_vectors1, q_path1)
+    save_fvecs(q_vectors2, q_path2)
+    save_fvecs(q_vectors3, q_path3)
+    save_fvecs(q_vectors4, q_path4)
+    save_fvecs(q_vectors5, q_path5)
